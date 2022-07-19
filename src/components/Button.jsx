@@ -1,14 +1,16 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { GameContext } from '../contexts/GameContext';
 
 const Button = ({ row, column }) => {
   const { gameState, dispatch } = useContext(GameContext);
-
+  const buttonRef = useRef(null);
   const { turn, gameOver, buttons } = gameState;
 
   const handleClick = () => {
+    console.log('clicked!');
     if (turn === 'player' && !gameOver) {
       dispatch({ type: 'PLAYER_NEXT_MOVE', row, column });
+      buttonRef.current.disabled = true;
     }
   };
 
@@ -18,6 +20,8 @@ const Button = ({ row, column }) => {
         buttons[row][column] === 'X' ? 'text-blue-900' : 'text-red-900'
       }`}
       onClick={handleClick}
+      disabled={buttons[row][column]}
+      ref={buttonRef}
     >
       {buttons[row][column]}
     </button>
