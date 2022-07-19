@@ -7,7 +7,6 @@ const Button = ({ row, column }) => {
   const { turn, gameOver, buttons } = gameState;
 
   const handleClick = () => {
-    console.log('clicked!');
     if (turn === 'player' && !gameOver) {
       dispatch({ type: 'PLAYER_NEXT_MOVE', row, column });
       buttonRef.current.disabled = true;

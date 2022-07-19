@@ -1,3 +1,4 @@
+import createInitialState from '../utils/createInitialState';
 import findRandomEmptyButton from '../utils/handleCPUTurn';
 
 const gameReducer = (state, action) => {
@@ -31,6 +32,9 @@ const gameReducer = (state, action) => {
           ),
         },
       };
+
+    case 'RESTART':
+      return createInitialState();
     default:
       return state;
   }
