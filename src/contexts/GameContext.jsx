@@ -1,12 +1,15 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useReducer } from 'react';
+import gameReducer from '../reducers/gameReducer';
 
 export const GameContext = createContext();
 
 const GameWrapper = ({ children }) => {
-  const [game, setGame] = useState({});
-
-  const createState = useCallback(() => {
-    let gameState = {};
+  const createInitialState = () => {
+    let gameState = {
+      buttons: {},
+      turn: 'player',
+      gameOver: false,
+    };
     const columns = 11;
     const rows = 20;
     // creates initialState object
@@ -17,17 +20,17 @@ const GameWrapper = ({ children }) => {
       for (let j = 0; j < columns; j++) {
         rowArr.push(null);
       }
-      gameState[`row${i}`] = rowArr;
+      gameState.buttons[i] = rowArr;
     }
     return gameState;
-  }, []);
+  };
 
-  useEffect(() => {
-    setGame(createState());
-  }, [createState]);
+  const [gameState, dispatch] = useReducer(gameReducer, createInitialState());
+
+  console.log('gameState:', gameState);
 
   return (
-    <GameContext.Provider value={{ game, setGame }}>
+    <GameContext.Provider value={{ gameState, dispatch }}>
       {children}
     </GameContext.Provider>
   );

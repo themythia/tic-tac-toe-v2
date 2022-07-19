@@ -11,7 +11,7 @@ const App = () => {
             <Button
               key={index}
               column={index % 11}
-              row={Math.floor(index / 11)}
+              row={Math.floor(index / 11) + 1}
             />
           ))}
         </Container>
