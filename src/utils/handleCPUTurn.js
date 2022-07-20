@@ -24,7 +24,6 @@ const findRandomEmptyButton = (buttons) => {
     emptyButtons[randomRow][
       (Math.random() * emptyButtons[randomRow].length) | 0
     ];
-
   // if emptyButtons only have one key,
   // and if length of the value of that key is 1
   // that turn is the last one and game is over
@@ -32,9 +31,9 @@ const findRandomEmptyButton = (buttons) => {
     Object.keys(emptyButtons).length === 1 &&
     emptyButtons[Object.keys(emptyButtons)[0]].length === 1
   ) {
-    return { row: randomRow, col: randomCol, gameOver: true };
+    return { row: Number(randomRow), col: randomCol, gameOver: true };
   }
 
-  return { row: randomRow, col: randomCol, gameOver: false };
+  return { row: Number(randomRow), col: randomCol, gameOver: false };
 };
 export default findRandomEmptyButton;

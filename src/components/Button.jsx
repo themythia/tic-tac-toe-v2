@@ -1,10 +1,22 @@
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { GameContext } from '../contexts/GameContext';
 
 const Button = ({ row, column }) => {
   const { gameState, dispatch } = useContext(GameContext);
   const buttonRef = useRef(null);
-  const { turn, gameOver, buttons } = gameState;
+  const { turn, gameOver, buttons, highlighted, buttonState } = gameState;
+  const [highlight, setHighlight] = useState(false);
+
+  useEffect(() => {
+    if (
+      buttonState[row][column].h ||
+      buttonState[row][column].v ||
+      buttonState[row][column].d1 ||
+      buttonState[row][column].d2
+    ) {
+      setHighlight(true);
+    }
+  }, [buttonState, column, row]);
 
   const handleClick = () => {
     if (turn === 'player' && !gameOver) {
@@ -17,6 +29,8 @@ const Button = ({ row, column }) => {
     <button
       className={`w-[29px] h-[29px] border-b border-r border-black flex justify-center items-center font-bold ${
         buttons[row][column] === 'X' ? 'text-blue-900' : 'text-red-900'
+      } hover:bg-slate-400 duration-200 active:bg-slate-700 ${
+        highlight && 'bg-green-500'
       }`}
       onClick={handleClick}
       disabled={buttons[row][column]}

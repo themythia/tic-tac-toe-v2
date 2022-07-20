@@ -16,11 +16,11 @@ const gameReducer = (state, action) => {
             action.column === index ? 'X' : button
           ),
         },
+        lastMove: { row: action.row, col: action.column },
       };
     case 'CPU_NEXT_MOVE':
       // handles the state change when cpu moves
       const { row, col, gameOver } = findRandomEmptyButton(state.buttons);
-
       return {
         ...state,
         turn: 'player',
@@ -31,10 +31,31 @@ const gameReducer = (state, action) => {
             col === index ? 'O' : button
           ),
         },
+        lastMove: { row, col },
       };
-
     case 'RESTART':
       return createInitialState();
+    case 'SET_SAME_ROW_BUTTON_STATE':
+      // handles the state change when 3 buttons on the same row
+      // are the same type
+      return {
+        ...state,
+        buttonState: {
+          ...state.buttonState,
+          [action.row]: state.buttonState[action.row].map((obj, index) => {
+            if (
+              index === action.col ||
+              index === action.col + 1 ||
+              index === action.col + 2
+            ) {
+              return {
+                ...obj,
+                v: true,
+              };
+            } else return obj;
+          }),
+        },
+      };
     default:
       return state;
   }
