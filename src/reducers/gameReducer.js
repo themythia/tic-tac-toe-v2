@@ -56,6 +56,25 @@ const gameReducer = (state, action) => {
           }),
         },
       };
+    case 'SET_SAME_COL_BUTTON_STATE':
+      // handles the state change when 3 buttons on the same column
+      // are the same type
+      return {
+        ...state,
+        buttonState: {
+          ...state.buttonState,
+          [action.first]: state.buttonState[action.first].map((obj, index) =>
+            index === action.col ? { ...obj, h: true } : obj
+          ),
+          [action.second]: state.buttonState[action.second].map((obj, index) =>
+            index === action.col ? { ...obj, h: true } : obj
+          ),
+          [action.third]: state.buttonState[action.second].map((obj, index) =>
+            index === action.col ? { ...obj, h: true } : obj
+          ),
+        },
+      };
+
     default:
       return state;
   }
