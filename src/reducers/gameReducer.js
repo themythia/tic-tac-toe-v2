@@ -44,9 +44,9 @@ const gameReducer = (state, action) => {
           ...state.buttonState,
           [action.row]: state.buttonState[action.row].map((obj, index) => {
             if (
-              index === action.col ||
-              index === action.col + 1 ||
-              index === action.col + 2
+              index === action.first ||
+              index === action.second ||
+              index === action.third
             ) {
               return {
                 ...obj,
