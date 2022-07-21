@@ -4,8 +4,6 @@ import { GameContext } from '../contexts/GameContext';
 const Container = ({ children }) => {
   const { gameState, dispatch } = useContext(GameContext);
 
-  console.log('gameState:', gameState);
-
   useEffect(() => {
     if (gameState.turn === 'cpu') {
       dispatch({ type: 'CPU_NEXT_MOVE' });
