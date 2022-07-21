@@ -1,7 +1,6 @@
 const createInitialState = () => {
   let gameState = {
     buttons: {},
-    highlighted: {},
     turn: 'player',
     gameOver: false,
     buttonState: {},
@@ -18,7 +17,6 @@ const createInitialState = () => {
       rowButtonState.push({ h: false, v: false, d1: false, d2: false });
     }
     gameState.buttons[i] = rowArr;
-    gameState.highlighted[i] = rowArr;
     gameState.buttonState[i] = rowButtonState;
   }
   return gameState;

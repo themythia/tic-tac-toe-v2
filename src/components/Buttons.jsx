@@ -120,7 +120,7 @@ const Buttons = () => {
       // default button state is null (falsy)
       // check if state of these buttons are false
       // state of buttons that not scored a point yet are false
-      else if (
+      if (
         row >= 1 &&
         row <= 18 &&
         col >= 0 &&
@@ -216,7 +216,7 @@ const Buttons = () => {
       // default button state is null (falsy)
       // check if state of these buttons are false
       // state of buttons that not scored a point yet are false
-      else if (
+      if (
         col >= 0 &&
         col <= 8 &&
         row <= 18 &&
@@ -314,7 +314,7 @@ const Buttons = () => {
       // default button state is null (falsy)
       // check if state of these buttons are false
       // state of buttons that not scored a point yet are false
-      else if (
+      if (
         col >= 2 &&
         col <= 10 &&
         row <= 18 &&
