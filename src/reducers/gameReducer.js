@@ -7,7 +7,6 @@ const gameReducer = (state, action) => {
       // handles the state change when player moves
       // changes turn to cpu
       // changes text of clicked button to X
-      console.log('PLAYER MOVED!');
       return {
         ...state,
         turn: 'cpu',
@@ -21,8 +20,6 @@ const gameReducer = (state, action) => {
       };
     case 'CPU_NEXT_MOVE':
       // handles the state change when cpu moves
-      console.log('CPU MOVED!');
-
       const { row, col, gameOver } = findRandomEmptyButton(state.buttons);
       return {
         ...state,
@@ -41,29 +38,6 @@ const gameReducer = (state, action) => {
     case 'SET_SAME_ROW_BUTTON_STATE':
       // handles the state change when 3 buttons on the same row
       // are the same type
-      console.group();
-      console.log('SET_SAME_ROW_BUTTON_STATE', action);
-      console.log('initial:');
-      console.log('row:', action.row, state.buttonState[action.row]);
-      console.log('modified:');
-      console.log(
-        'row:',
-        action.row,
-        state.buttonState[action.row].map((obj, index) => {
-          if (
-            index === action.first ||
-            index === action.second ||
-            index === action.third
-          ) {
-            return {
-              ...obj,
-              v: true,
-            };
-          } else return obj;
-        })
-      );
-      console.groupEnd();
-
       return {
         ...state,
         buttonState: {
@@ -76,7 +50,7 @@ const gameReducer = (state, action) => {
             ) {
               return {
                 ...obj,
-                v: true,
+                h: true,
               };
             } else return obj;
           }),
@@ -85,98 +59,23 @@ const gameReducer = (state, action) => {
     case 'SET_SAME_COL_BUTTON_STATE':
       // handles the state change when 3 buttons on the same column
       // are the same type
-      console.group();
-      console.log('SET_SAME_COL_BUTTON_STATE', action);
-      console.log('initial:');
-      console.log('row:', action.first, state.buttonState[action.first]);
-      console.log('row:', action.second, state.buttonState[action.second]);
-      console.log('row:', action.third, state.buttonState[action.third]);
-      console.log('modified:');
-      console.log(
-        'row:',
-        action.first,
-        state.buttonState[action.first].map((obj, index) =>
-          index === action.col ? { ...obj, h: true } : obj
-        )
-      );
-      console.log(
-        'row:',
-        state.buttonState[action.second].map((obj, index) =>
-          index === action.col ? { ...obj, h: true } : obj
-        )
-      );
-      console.log(
-        'row:',
-        action.third,
-        state.buttonState[action.second].map((obj, index) =>
-          index === action.col ? { ...obj, h: true } : obj
-        )
-      );
-
-      console.groupEnd();
-
       return {
         ...state,
         buttonState: {
           ...state.buttonState,
           [action.first]: state.buttonState[action.first].map((obj, index) =>
-            index === action.col ? { ...obj, h: true } : obj
+            index === action.col ? { ...obj, v: true } : obj
           ),
           [action.second]: state.buttonState[action.second].map((obj, index) =>
-            index === action.col ? { ...obj, h: true } : obj
+            index === action.col ? { ...obj, v: true } : obj
           ),
-          [action.third]: state.buttonState[action.second].map((obj, index) =>
-            index === action.col ? { ...obj, h: true } : obj
+          [action.third]: state.buttonState[action.third].map((obj, index) =>
+            index === action.col ? { ...obj, v: true } : obj
           ),
         },
       };
     case 'SET_DIAGONAL_BUTTON_STATE':
       // handles the state change when 3 buttons are diagonal
-      console.groupEnd();
-      console.log('SET_DIAGONAL_BUTTON_STATE', action);
-      console.log('initial:');
-      console.log(
-        'row:',
-        action.first.row,
-        state.buttonState[action.first.row]
-      );
-      console.log(
-        'row:',
-        action.second.row,
-        state.buttonState[action.second.row]
-      );
-      console.log(
-        'row:',
-        action.third.row,
-        state.buttonState[action.third.row]
-      );
-
-      console.log('modified:');
-      console.log(
-        'row:',
-        action.first.row,
-        state.buttonState[action.first.row].map((obj, index) =>
-          index === action.first.col ? { ...obj, [action.diagonal]: true } : obj
-        )
-      );
-      console.log(
-        'row:',
-        action.second.row,
-        state.buttonState[action.second.row].map((obj, index) =>
-          index === action.second.col
-            ? { ...obj, [action.diagonal]: true }
-            : obj
-        )
-      );
-      console.log(
-        'row:',
-        action.third.row,
-        state.buttonState[action.third.row].map((obj, index) =>
-          index === action.third.col ? { ...obj, [action.diagonal]: true } : obj
-        )
-      );
-
-      console.groupEnd();
       return {
         ...state,
         buttonState: {

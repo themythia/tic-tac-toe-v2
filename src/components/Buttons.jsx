@@ -12,8 +12,6 @@ const Buttons = () => {
     // initial values of row and col is null
     // check if a turn is played and row and col have a value
     if (row !== null && col !== null) {
-      console.log('row:', row);
-      console.log('col:', col);
       // horizontal check
       // ---------------------------
 
@@ -31,14 +29,10 @@ const Buttons = () => {
         buttons[row][col] === buttons[row][col + 1] &&
         buttons[row][col] === buttons[row][col + 2] &&
         buttons[row][col] &&
-        !buttonState[row][col].v &&
-        !buttonState[row][col + 1].v &&
-        !buttonState[row][col + 2].v
+        !buttonState[row][col].h &&
+        !buttonState[row][col + 1].h &&
+        !buttonState[row][col + 2].h
       ) {
-        console.group('horizontal - first button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
         dispatch({
           type: 'SET_SAME_ROW_BUTTON_STATE',
           row,
@@ -61,15 +55,10 @@ const Buttons = () => {
         buttons[row][col] === buttons[row][col + 1] &&
         buttons[row][col] === buttons[row][col - 1] &&
         buttons[row][col] &&
-        !buttonState[row][col].v &&
-        !buttonState[row][col + 1].v &&
-        !buttonState[row][col - 1].v
+        !buttonState[row][col].h &&
+        !buttonState[row][col + 1].h &&
+        !buttonState[row][col - 1].h
       ) {
-        console.group('horizontal - middle button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_SAME_ROW_BUTTON_STATE',
           row,
@@ -93,15 +82,10 @@ const Buttons = () => {
         buttons[row][col] === buttons[row][col - 1] &&
         buttons[row][col] === buttons[row][col - 2] &&
         buttons[row][col] &&
-        !buttonState[row][col].v &&
-        !buttonState[row][col - 1].v &&
-        !buttonState[row][col - 2].v
+        !buttonState[row][col].h &&
+        !buttonState[row][col - 1].h &&
+        !buttonState[row][col - 2].h
       ) {
-        console.group('horizontal - last button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_SAME_ROW_BUTTON_STATE',
           row,
@@ -128,15 +112,10 @@ const Buttons = () => {
         buttons[row][col] === buttons[row + 1][col] &&
         buttons[row][col] === buttons[row + 2][col] &&
         buttons[row][col] &&
-        !buttonState[row][col].h &&
-        !buttonState[row + 1][col].h &&
-        !buttonState[row + 2][col].h
+        !buttonState[row][col].v &&
+        !buttonState[row + 1][col].v &&
+        !buttonState[row + 2][col].v
       ) {
-        console.group('vertical - top button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_SAME_COL_BUTTON_STATE',
           col,
@@ -160,14 +139,10 @@ const Buttons = () => {
         buttons[row][col] === buttons[row + 1][col] &&
         buttons[row][col] === buttons?.[row - 1]?.[col] &&
         buttons[row][col] &&
-        !buttonState[row][col].h &&
-        !buttonState[row + 1][col].h &&
-        !buttonState?.[row - 1]?.[col]?.h
+        !buttonState[row][col].v &&
+        !buttonState[row + 1][col].v &&
+        !buttonState?.[row - 1]?.[col]?.v
       ) {
-        console.group('vertical - mid button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
         dispatch({
           type: 'SET_SAME_COL_BUTTON_STATE',
           col,
@@ -191,14 +166,10 @@ const Buttons = () => {
         buttons[row][col] === buttons[row - 1][col] &&
         buttons[row][col] === buttons[row - 2][col] &&
         buttons[row][col] &&
-        !buttonState[row][col].h &&
-        !buttonState[row - 1][col].h &&
-        !buttonState[row - 2][col].h
+        !buttonState[row][col].v &&
+        !buttonState[row - 1][col].v &&
+        !buttonState[row - 2][col].v
       ) {
-        console.group('vertical - bottom button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
         dispatch({
           type: 'SET_SAME_COL_BUTTON_STATE',
           col,
@@ -228,11 +199,6 @@ const Buttons = () => {
         !buttonState[row + 1][col + 1].d1 &&
         !buttonState[row + 2][col + 2].d1
       ) {
-        console.group('d1 - top left button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_DIAGONAL_BUTTON_STATE',
           first: { row, col },
@@ -260,11 +226,6 @@ const Buttons = () => {
         !buttonState[row - 1][col - 1].d1 &&
         !buttonState[row + 1][col + 1].d1
       ) {
-        console.group('d1 - middle button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_DIAGONAL_BUTTON_STATE',
           first: { row, col },
@@ -292,11 +253,6 @@ const Buttons = () => {
         !buttonState[row - 1][col - 1].d1 &&
         !buttonState[row - 2][col - 2].d1
       ) {
-        console.group('d1 - bottom right button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_DIAGONAL_BUTTON_STATE',
           first: { row, col },
@@ -326,11 +282,6 @@ const Buttons = () => {
         !buttonState[row + 1][col - 1].d2 &&
         !buttonState[row + 2][col - 2].d2
       ) {
-        console.group('d2 - top right button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_DIAGONAL_BUTTON_STATE',
           first: { row, col },
@@ -358,11 +309,6 @@ const Buttons = () => {
         !buttonState[row - 1][col + 1].d2 &&
         !buttonState[row + 1][col - 1].d2
       ) {
-        console.group('d2 - middle button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_DIAGONAL_BUTTON_STATE',
           first: { row, col },
@@ -390,11 +336,6 @@ const Buttons = () => {
         !buttonState[row - 1][col + 1].d2 &&
         !buttonState[row - 2][col + 2].d2
       ) {
-        console.group('d2 - bottom left button');
-        console.log('row:', row);
-        console.log('col:', col);
-        console.groupEnd();
-
         dispatch({
           type: 'SET_DIAGONAL_BUTTON_STATE',
           first: { row, col },
