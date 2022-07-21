@@ -12,6 +12,8 @@ const Buttons = () => {
     // initial values of row and col is null
     // check if a turn is played and row and col have a value
     if (row !== null && col !== null) {
+      console.log('row:', row);
+      console.log('col:', col);
       // horizontal check
       // ---------------------------
 
@@ -22,7 +24,10 @@ const Buttons = () => {
       // check if state of these buttons are false
       // state of buttons that not scored a point yet are false
       if (
+        col >= 0 &&
         col <= 8 &&
+        row >= 1 &&
+        row <= 20 &&
         buttons[row][col] === buttons[row][col + 1] &&
         buttons[row][col] === buttons[row][col + 2] &&
         buttons[row][col] &&
@@ -30,7 +35,10 @@ const Buttons = () => {
         !buttonState[row][col + 1].v &&
         !buttonState[row][col + 2].v
       ) {
-        console.log('1');
+        console.group('horizontal - first button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
         dispatch({
           type: 'SET_SAME_ROW_BUTTON_STATE',
           row,
@@ -48,6 +56,8 @@ const Buttons = () => {
       else if (
         col >= 1 &&
         col <= 9 &&
+        row >= 1 &&
+        row <= 20 &&
         buttons[row][col] === buttons[row][col + 1] &&
         buttons[row][col] === buttons[row][col - 1] &&
         buttons[row][col] &&
@@ -55,7 +65,10 @@ const Buttons = () => {
         !buttonState[row][col + 1].v &&
         !buttonState[row][col - 1].v
       ) {
-        console.log('2');
+        console.group('horizontal - middle button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
 
         dispatch({
           type: 'SET_SAME_ROW_BUTTON_STATE',
@@ -74,6 +87,9 @@ const Buttons = () => {
       // state of buttons that not scored a point yet are false
       else if (
         col >= 2 &&
+        col <= 10 &&
+        row >= 1 &&
+        row <= 20 &&
         buttons[row][col] === buttons[row][col - 1] &&
         buttons[row][col] === buttons[row][col - 2] &&
         buttons[row][col] &&
@@ -81,7 +97,10 @@ const Buttons = () => {
         !buttonState[row][col - 1].v &&
         !buttonState[row][col - 2].v
       ) {
-        console.log('3');
+        console.group('horizontal - last button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
 
         dispatch({
           type: 'SET_SAME_ROW_BUTTON_STATE',
@@ -102,7 +121,10 @@ const Buttons = () => {
       // check if state of these buttons are false
       // state of buttons that not scored a point yet are false
       else if (
+        row >= 1 &&
         row <= 18 &&
+        col >= 0 &&
+        col <= 10 &&
         buttons[row][col] === buttons[row + 1][col] &&
         buttons[row][col] === buttons[row + 2][col] &&
         buttons[row][col] &&
@@ -110,7 +132,10 @@ const Buttons = () => {
         !buttonState[row + 1][col].h &&
         !buttonState[row + 2][col].h
       ) {
-        console.log('4');
+        console.group('vertical - top button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
 
         dispatch({
           type: 'SET_SAME_COL_BUTTON_STATE',
@@ -130,6 +155,8 @@ const Buttons = () => {
       else if (
         row >= 2 &&
         row <= 19 &&
+        col >= 0 &&
+        col <= 10 &&
         buttons[row][col] === buttons[row + 1][col] &&
         buttons[row][col] === buttons?.[row - 1]?.[col] &&
         buttons[row][col] &&
@@ -137,7 +164,10 @@ const Buttons = () => {
         !buttonState[row + 1][col].h &&
         !buttonState?.[row - 1]?.[col]?.h
       ) {
-        console.log('9999');
+        console.group('vertical - mid button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
         dispatch({
           type: 'SET_SAME_COL_BUTTON_STATE',
           col,
@@ -155,6 +185,9 @@ const Buttons = () => {
       // state of buttons that not scored a point yet are false
       else if (
         row >= 3 &&
+        row <= 20 &&
+        col >= 0 &&
+        col <= 10 &&
         buttons[row][col] === buttons[row - 1][col] &&
         buttons[row][col] === buttons[row - 2][col] &&
         buttons[row][col] &&
@@ -162,7 +195,10 @@ const Buttons = () => {
         !buttonState[row - 1][col].h &&
         !buttonState[row - 2][col].h
       ) {
-        console.log('9999');
+        console.group('vertical - bottom button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
         dispatch({
           type: 'SET_SAME_COL_BUTTON_STATE',
           col,
@@ -172,8 +208,201 @@ const Buttons = () => {
         });
       }
 
-      // capraz 1 kontrol
-      // capraz 2 kontrol
+      // diagonal (from top left to bottom right) check
+
+      // * if last played button is top left *
+
+      // check if values of three buttons are the same and truthy
+      // default button state is null (falsy)
+      // check if state of these buttons are false
+      // state of buttons that not scored a point yet are false
+      else if (
+        col >= 0 &&
+        col <= 8 &&
+        row <= 18 &&
+        row >= 0 &&
+        buttons[row][col] === buttons[row + 1][col + 1] &&
+        buttons[row][col] === buttons[row + 2][col + 2] &&
+        buttons[row][col] &&
+        !buttonState[row][col].d1 &&
+        !buttonState[row + 1][col + 1].d1 &&
+        !buttonState[row + 2][col + 2].d1
+      ) {
+        console.group('d1 - top left button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
+
+        dispatch({
+          type: 'SET_DIAGONAL_BUTTON_STATE',
+          first: { row, col },
+          second: { row: row + 1, col: col + 1 },
+          third: { row: row + 2, col: col + 2 },
+          diagonal: 'd1',
+        });
+      }
+
+      // * if last played button is middle *
+
+      // check if values of three buttons are the same and truthy
+      // default button state is null (falsy)
+      // check if state of these buttons are false
+      // state of buttons that not scored a point yet are false
+      else if (
+        col >= 1 &&
+        col <= 9 &&
+        row >= 2 &&
+        row <= 19 &&
+        buttons[row][col] === buttons[row - 1][col - 1] &&
+        buttons[row][col] === buttons[row + 1][col + 1] &&
+        buttons[row][col] &&
+        !buttonState[row][col].d1 &&
+        !buttonState[row - 1][col - 1].d1 &&
+        !buttonState[row + 1][col + 1].d1
+      ) {
+        console.group('d1 - middle button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
+
+        dispatch({
+          type: 'SET_DIAGONAL_BUTTON_STATE',
+          first: { row, col },
+          second: { row: row - 1, col: col - 1 },
+          third: { row: row + 1, col: col + 1 },
+          diagonal: 'd1',
+        });
+      }
+
+      // * if last played button is bottom right *
+
+      // check if values of three buttons are the same and truthy
+      // default button state is null (falsy)
+      // check if state of these buttons are false
+      // state of buttons that not scored a point yet are false
+      else if (
+        col >= 2 &&
+        col <= 10 &&
+        row >= 3 &&
+        row <= 20 &&
+        buttons[row][col] === buttons[row - 1][col - 1] &&
+        buttons[row][col] === buttons[row - 2][col - 2] &&
+        buttons[row][col] &&
+        !buttonState[row][col].d1 &&
+        !buttonState[row - 1][col - 1].d1 &&
+        !buttonState[row - 2][col - 2].d1
+      ) {
+        console.group('d1 - bottom right button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
+
+        dispatch({
+          type: 'SET_DIAGONAL_BUTTON_STATE',
+          first: { row, col },
+          second: { row: row - 1, col: col - 1 },
+          third: { row: row - 2, col: col - 2 },
+          diagonal: 'd1',
+        });
+      }
+
+      // diagonal (from top right to bottom left) check
+
+      // * if last played button is top right *
+
+      // check if values of three buttons are the same and truthy
+      // default button state is null (falsy)
+      // check if state of these buttons are false
+      // state of buttons that not scored a point yet are false
+      else if (
+        col >= 2 &&
+        col <= 10 &&
+        row <= 18 &&
+        row >= 0 &&
+        buttons[row][col] === buttons[row + 1][col - 1] &&
+        buttons[row][col] === buttons[row + 2][col - 2] &&
+        buttons[row][col] &&
+        !buttonState[row][col].d2 &&
+        !buttonState[row + 1][col - 1].d2 &&
+        !buttonState[row + 2][col - 2].d2
+      ) {
+        console.group('d2 - top right button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
+
+        dispatch({
+          type: 'SET_DIAGONAL_BUTTON_STATE',
+          first: { row, col },
+          second: { row: row + 1, col: col - 1 },
+          third: { row: row + 2, col: col - 2 },
+          diagonal: 'd2',
+        });
+      }
+
+      // * if last played button is middle *
+
+      // check if values of three buttons are the same and truthy
+      // default button state is null (falsy)
+      // check if state of these buttons are false
+      // state of buttons that not scored a point yet are false
+      else if (
+        col >= 1 &&
+        col <= 9 &&
+        row >= 2 &&
+        row <= 19 &&
+        buttons[row][col] === buttons[row - 1][col + 1] &&
+        buttons[row][col] === buttons[row + 1][col - 1] &&
+        buttons[row][col] &&
+        !buttonState[row][col].d2 &&
+        !buttonState[row - 1][col + 1].d2 &&
+        !buttonState[row + 1][col - 1].d2
+      ) {
+        console.group('d2 - middle button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
+
+        dispatch({
+          type: 'SET_DIAGONAL_BUTTON_STATE',
+          first: { row, col },
+          second: { row: row - 1, col: col + 1 },
+          third: { row: row + 1, col: col - 1 },
+          diagonal: 'd2',
+        });
+      }
+
+      // * if last played button is bottom left *
+
+      // check if values of three buttons are the same and truthy
+      // default button state is null (falsy)
+      // check if state of these buttons are false
+      // state of buttons that not scored a point yet are false
+      else if (
+        col >= 0 &&
+        col <= 8 &&
+        row >= 3 &&
+        row <= 20 &&
+        buttons[row][col] === buttons[row - 1][col + 1] &&
+        buttons[row][col] === buttons[row - 2][col + 2] &&
+        buttons[row][col] &&
+        !buttonState[row][col].d2 &&
+        !buttonState[row - 1][col + 1].d2 &&
+        !buttonState[row - 2][col + 2].d2
+      ) {
+        console.group('d2 - bottom left button');
+        console.log('row:', row);
+        console.log('col:', col);
+        console.groupEnd();
+
+        dispatch({
+          type: 'SET_DIAGONAL_BUTTON_STATE',
+          first: { row, col },
+          second: { row: row - 1, col: col + 1 },
+          third: { row: row - 2, col: col + 2 },
+          diagonal: 'd2',
+        });
+      }
     }
   }, [buttonState, buttons, dispatch, lastMove, turn]);
 

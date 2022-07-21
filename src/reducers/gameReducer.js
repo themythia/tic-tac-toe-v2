@@ -7,6 +7,7 @@ const gameReducer = (state, action) => {
       // handles the state change when player moves
       // changes turn to cpu
       // changes text of clicked button to X
+      console.log('PLAYER MOVED!');
       return {
         ...state,
         turn: 'cpu',
@@ -20,6 +21,8 @@ const gameReducer = (state, action) => {
       };
     case 'CPU_NEXT_MOVE':
       // handles the state change when cpu moves
+      console.log('CPU MOVED!');
+
       const { row, col, gameOver } = findRandomEmptyButton(state.buttons);
       return {
         ...state,
@@ -38,6 +41,7 @@ const gameReducer = (state, action) => {
     case 'SET_SAME_ROW_BUTTON_STATE':
       // handles the state change when 3 buttons on the same row
       // are the same type
+      console.log('SET_SAME_ROW_BUTTON_STATE', action);
       return {
         ...state,
         buttonState: {
@@ -59,6 +63,8 @@ const gameReducer = (state, action) => {
     case 'SET_SAME_COL_BUTTON_STATE':
       // handles the state change when 3 buttons on the same column
       // are the same type
+      console.log('SET_SAME_COL_BUTTON_STATE', action);
+
       return {
         ...state,
         buttonState: {
@@ -74,7 +80,33 @@ const gameReducer = (state, action) => {
           ),
         },
       };
-
+    case 'SET_DIAGONAL_BUTTON_STATE':
+      // handles the state change when 3 buttons are diagonal
+      console.log('SET_DIAGONAL_BUTTON_STATE', action);
+      return {
+        ...state,
+        buttonState: {
+          ...state.buttonState,
+          [action.first.row]: state.buttonState[action.first.row].map(
+            (obj, index) =>
+              index === action.first.col
+                ? { ...obj, [action.diagonal]: true }
+                : obj
+          ),
+          [action.second.row]: state.buttonState[action.second.row].map(
+            (obj, index) =>
+              index === action.second.col
+                ? { ...obj, [action.diagonal]: true }
+                : obj
+          ),
+          [action.third.row]: state.buttonState[action.third.row].map(
+            (obj, index) =>
+              index === action.third.col
+                ? { ...obj, [action.diagonal]: true }
+                : obj
+          ),
+        },
+      };
     default:
       return state;
   }
